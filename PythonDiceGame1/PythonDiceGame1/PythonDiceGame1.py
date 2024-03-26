@@ -10,6 +10,7 @@ def roll():
     return roll
 
 while True:
+    rules_input = input("Welcome to Dice! \n Press Enter to continue!")
     players = input("Enter the number of players (2-4: ")
     if players.isdigit():
         players = int(players)
@@ -30,29 +31,30 @@ while max(player_scores) < max_score:
         print("\nPlayer number", player_idx + 1, "turn has just started!")
         print("Your total score is:", player_scores[player_idx], "\n")
         current_score = 0
-    
-    while True:
-        should_roll = input("Would you like to roll (y)?")
-        if should_roll.lower() != "y":
-            break
-    
-    
-        value = roll()
-        if value == 1:
-            print("You rolled a 1! Turn done!")
-            current_score = 0
-            break
-        else:
-            current_score += value
-            print("You rolled a: ", value)
-        
-        print("Your score is:", current_score)
-        
-    player_scores[player_idx] += current_score
-    print("Your total scoore is:", player_scores[player_idx])
+
+        while True:
+            should_roll = input("Would you like to roll (y/n)?")
+            if should_roll.lower() != "y":
+                break
+            value = roll()
+            if value == 1:
+                print("You rolled a 1! Turn done!")
+                current_score = 0
+                break
+            if current_score >= 50:
+                print("Player number", player_idx +1,"You have reached 50!")
+                break
+            else:
+                current_score += value
+                print("You rolled a: ", value)            
+                print("Your score is:", current_score)
+        player_scores[player_idx] += current_score
+        print("Your total score is:", player_scores[player_idx])
     
 max_score = max(player_scores)
 winnning_idx = player_scores.index(max_score)
 print("Player number", winning_idx + 1,
       "is the winner with a score of:", max_score)
+
+#add after each player has 3 breaks show current highest score.
 
